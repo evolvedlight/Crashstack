@@ -1,6 +1,7 @@
 ﻿using Crashstack.Data;
 using Crashstack.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SentryParser;
 using SentryParser.Model;
 using System.Text;
@@ -57,9 +58,43 @@ namespace CrashstackApi.Controllers
             {
                 foreach (var exception in exceptionMap.Value)
                 {
+                    var issueSearchField = exception.Type;
+                    if (exception.Stacktrace?.Frames?.Any() == true)
+                    {
+                        issueSearchField += exception.Stacktrace.Frames.Last().Function;
+                    }
+                    // Naive way - go by just one top stack frame
+                    var candidateIssues = await _db.Issues
+                        .Where(i => i.IssueSearchField == issueSearchField)
+                        .ToListAsync();
+
+                    Issue issue;
+                    if (candidateIssues.Any())
+                    {
+                        issue = candidateIssues.OrderByDescending(i => i.CreatedAt).First();
+                    }
+                    else
+                    {
+                        issue = new Issue
+                        {
+                            IssueSearchField = issueSearchField,
+                            Title = exception.Value,
+                            CreatedAt = DateTime.UtcNow,
+                            Level = sentryEvent.Level,
+                            Status = IssueStatus.Open,
+                        };
+                        _db.Issues.Add(issue);
+                    }
+
+                    var sentryTimeStampUtc = DateTime.SpecifyKind(sentryEvent.Timestamp, DateTimeKind.Utc);
                     var csEvent = new CrashstackEvent
                     {
-                        Type = exception.Type
+                        Type = exception.Type,
+                        Issue = issue,
+                        CreatedAt = DateTime.UtcNow,
+                        Level = sentryEvent.Level,
+                        Module = exception.Module,
+                        EventTimestamp = sentryTimeStampUtc
                     };
                     _db.CrashstackEvents.Add(csEvent);
                 }

@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Crashstack.Data.Migrations
 {
     [DbContext(typeof(CrashstackDbContext))]
-    [Migration("20240401151637_AddExceptionEventsType")]
-    partial class AddExceptionEventsType
+    [Migration("20240401164043_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0-preview.2.24128.4")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -31,18 +31,13 @@ namespace Crashstack.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("EventTimestamp")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.ToTable("CrashstackEvents");
-                });
-
-            modelBuilder.Entity("Crashstack.Data.Entities.ExceptionEvent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("IssueId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Level")
@@ -57,9 +52,6 @@ namespace Crashstack.Data.Migrations
                     b.Property<string>("ThreadId")
                         .HasColumnType("text");
 
-                    b.Property<string>("Transaction")
-                        .HasColumnType("text");
-
                     b.Property<string>("Type")
                         .HasColumnType("text");
 
@@ -68,7 +60,37 @@ namespace Crashstack.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExceptionEvents");
+                    b.HasIndex("IssueId");
+
+                    b.ToTable("CrashstackEvents");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Issue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("IssueSearchField")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("Crashstack.Data.Entities.Trace", b =>
@@ -92,6 +114,17 @@ namespace Crashstack.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Traces");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.CrashstackEvent", b =>
+                {
+                    b.HasOne("Crashstack.Data.Entities.Issue", "Issue")
+                        .WithMany()
+                        .HasForeignKey("IssueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Issue");
                 });
 #pragma warning restore 612, 618
         }
