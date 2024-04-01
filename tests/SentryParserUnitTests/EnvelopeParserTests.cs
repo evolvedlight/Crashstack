@@ -1,4 +1,5 @@
 using SentryParser;
+using SentryParser.Model;
 
 namespace SentryParserUnitTests
 {
@@ -34,8 +35,8 @@ namespace SentryParserUnitTests
             var result = EnvelopeParser.Parse(input).ToList();
 
             Assert.Equal(2, result.Count);
-
-            Assert.Empty(result[0].Content);
+            var resultContent = result[0].Attachment;
+            Assert.Empty(resultContent!.Content);
         }
         
         [Fact]
@@ -51,7 +52,8 @@ namespace SentryParserUnitTests
 
             Assert.Single(result);
 
-            Assert.NotEmpty(result[0].Content);
+            var resultContent = result[0].Attachment;
+            Assert.NotEmpty(resultContent!.Content);
         }
 
         [Fact]
@@ -70,7 +72,8 @@ namespace SentryParserUnitTests
 
             Assert.Equal(2, result.Count);
 
-            Assert.NotEmpty(result[0].Content);
+            var resultContent = result[0];
+            Assert.NotNull(resultContent.Event!.ServerName);
         }
     }
 }

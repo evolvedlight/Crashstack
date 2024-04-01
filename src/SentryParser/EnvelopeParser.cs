@@ -1,12 +1,12 @@
 ﻿using SentryParser.Model;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace SentryParser;
 
 public static class EnvelopeParser
 {
-    public static IEnumerable<SentryEvent> Parse(string input)
+    public static IEnumerable<SentryEnvelopeItem> Parse(string input)
     {
         var parts = input.Split("\n", StringSplitOptions.TrimEntries);
 
@@ -19,35 +19,48 @@ public static class EnvelopeParser
             {
                 continue;
             }
-            //var withoutNewLine = part.Substring(0, part.LastIndexOf("\\n"));
             var json = JsonSerializer.Deserialize<JsonElement>(part);
 
-            if (json.TryGetProperty("type", out var eventType))
-            {
-                
-
-                var content = parts[eventId + 1];
-                long? contentLength;
-                if (json.TryGetProperty("length", out var lengthJsonNode))
-                {
-                    // Later we can do this well
-                    contentLength = lengthJsonNode.GetInt64();
-                }
-                else
-                {
-                    contentLength = content.LongCount();
-                }
-
-                yield return new SentryEvent
-                {
-                    Length = contentLength,
-                    Content = content,
-                    Type = eventType.GetString(),
-                };
-            } 
-            else
+            if (!json.TryGetProperty("type", out var eventTypeNode))
             {
                 throw new InvalidDataException($"JSON event is missing type property");
+            }
+
+            var content = parts[eventId + 1];
+            long contentLength;
+            if (json.TryGetProperty("length", out var lengthJsonNode))
+            {
+                // Later we can do this well
+                contentLength = lengthJsonNode.GetInt64();
+            }
+            else
+            {
+                contentLength = content.LongCount();
+            }
+
+            var eventType = eventTypeNode.GetString() ?? throw new InvalidDataException($"JSON event is missing type property");
+
+            var result = new SentryEnvelopeItem(eventType, contentLength);
+
+            switch (eventType)
+            {
+                //case "transaction":
+                //    var transaction = JsonSerializer.Deserialize<SentryTransaction>(content);
+                //    break;
+                case "attachment":
+                    result.Attachment = new SentryAttachment(content);
+                    yield return result;
+                    break;
+                //case "session":
+                //    var session = JsonSerializer.Deserialize<SentrySession>(content);
+                //    break;
+                case "event":
+                    result.Event = JsonSerializer.Deserialize<SentryEvent>(content, JsonDefaults.JSON_DEFAULTS);
+                    yield return result;
+                    break;
+                default:
+                    yield return result;
+                    break;
             }
         }
     }

@@ -3,11 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrashstackApi", "src\CrashstackApi\CrashstackApi.csproj", "{4B5C693F-F8FC-4978-B815-4323B34F2A2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrashstackApi", "src\CrashstackApi\CrashstackApi.csproj", "{4B5C693F-F8FC-4978-B815-4323B34F2A2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentryParser", "src\SentryParser\SentryParser.csproj", "{1F304A51-D8BF-43CF-9A15-A8C939B1F281}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SentryParser", "src\SentryParser\SentryParser.csproj", "{1F304A51-D8BF-43CF-9A15-A8C939B1F281}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentryParserUnitTests", "tests\SentryParserUnitTests\SentryParserUnitTests.csproj", "{9E2EED2A-7EC0-4BBB-82EB-0EEB19BB8E16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SentryParserUnitTests", "tests\SentryParserUnitTests\SentryParserUnitTests.csproj", "{9E2EED2A-7EC0-4BBB-82EB-0EEB19BB8E16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.AppHost", "Crashstack.AppHost\Crashstack.AppHost.csproj", "{CADCC24A-D77B-441C-91C1-6D31AE537C04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.ServiceDefaults", "Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj", "{FB6EB211-C2B3-4B9B-B02A-F9013BE135D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.Data", "src\Crashstack.Data\Crashstack.Data.csproj", "{815770C8-0308-41AE-ABDC-1195E1881ACC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.MigrationService", "src\Crashstack.MigrationService\Crashstack.MigrationService.csproj", "{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{9E2EED2A-7EC0-4BBB-82EB-0EEB19BB8E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E2EED2A-7EC0-4BBB-82EB-0EEB19BB8E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E2EED2A-7EC0-4BBB-82EB-0EEB19BB8E16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADCC24A-D77B-441C-91C1-6D31AE537C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADCC24A-D77B-441C-91C1-6D31AE537C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADCC24A-D77B-441C-91C1-6D31AE537C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADCC24A-D77B-441C-91C1-6D31AE537C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB6EB211-C2B3-4B9B-B02A-F9013BE135D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB6EB211-C2B3-4B9B-B02A-F9013BE135D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB6EB211-C2B3-4B9B-B02A-F9013BE135D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB6EB211-C2B3-4B9B-B02A-F9013BE135D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{815770C8-0308-41AE-ABDC-1195E1881ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815770C8-0308-41AE-ABDC-1195E1881ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815770C8-0308-41AE-ABDC-1195E1881ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815770C8-0308-41AE-ABDC-1195E1881ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

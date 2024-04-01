@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Crashstack.Data;
+using Crashstack.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
 using SentryParser;
+using SentryParser.Model;
 using System.Text;
-using System.Text.Json.Nodes;
 
 namespace CrashstackApi.Controllers
 {
@@ -9,10 +11,12 @@ namespace CrashstackApi.Controllers
     public class EnvelopeController : ControllerBase
     {
         private readonly ILogger<EnvelopeController> _logger;
+        private readonly CrashstackDbContext _db;
 
-        public EnvelopeController(ILogger<EnvelopeController> logger)
+        public EnvelopeController(ILogger<EnvelopeController> logger, CrashstackDbContext context)
         {
             _logger = logger;
+            _db = context;
         }
 
         [HttpPost("api/{projectId}/envelope")]
@@ -23,25 +27,44 @@ namespace CrashstackApi.Controllers
             bodyStream.CopyTo(ms);
             var envelope = Encoding.UTF8.GetString(ms.ToArray());
 
-            var parsedEvents = EnvelopeParser.Parse(envelope);
+            var parsedEnvelopeItems = EnvelopeParser.Parse(envelope);
 
-            //_logger.LogInformation("Recieved event {Events}", parsedEvents);
-
-            foreach (var thing in parsedEvents)
+            foreach (var envelopeItem in parsedEnvelopeItems)
             {
-                _logger.LogInformation("Recieved event {Events}", thing.Content);
+                if (envelopeItem.Type is "event")
+                {
+                    if (envelopeItem?.Event?.Exception is not null)
+                    {
+                        await SaveError(envelopeItem.Event);
+                    }
+                }
+
+                _logger.LogInformation("Received event type {type}", envelopeItem?.Type);
             }
 
             return Ok();
         }
-    }
 
-    public class Envelope
-    {
-        public List<JsonNode> Events { get; set; }
-    }
+        private async Task SaveError(SentryEvent sentryEvent)
+        {
+            if (sentryEvent?.Exception is null)
+            {
+                _logger.LogWarning("Not an exception");
+                return;
+            }
 
-    public class Event
-    {
+            foreach (var exceptionMap in sentryEvent.Exception)
+            {
+                foreach (var exception in exceptionMap.Value)
+                {
+                    var csEvent = new CrashstackEvent
+                    {
+                        Type = exception.Type
+                    };
+                    _db.CrashstackEvents.Add(csEvent);
+                }
+            }
+            await _db.SaveChangesAsync();
+        }
     }
 }
