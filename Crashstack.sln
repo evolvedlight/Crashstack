@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Data", "src\Cras
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.MigrationService", "src\Crashstack.MigrationService\Crashstack.MigrationService.csproj", "{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Server", "src\Crashstack\Crashstack.Server\Crashstack.Server.csproj", "{8D335309-BD9E-404A-A1D5-A347BEF2708C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Server", "src\Crashstack.Server\Crashstack.Server.csproj", "{8D335309-BD9E-404A-A1D5-A347BEF2708C}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crashstack.client", "src\Crashstack\crashstack.client\crashstack.client.esproj", "{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crashstack.client", "src\crashstack.client\crashstack.client.esproj", "{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.Contracts", "src\Crashstack.Contracts\Crashstack.Contracts.csproj", "{53FB3516-6A56-4438-8141-665A136FD642}"
 EndProject

@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crashstack.MigrationService\Crashstack.MigrationService.csproj" />
-    <ProjectReference Include="..\Crashstack\Crashstack.Server\Crashstack.Server.csproj" />
+    <ProjectReference Include="..\Crashstack.Server\Crashstack.Server.csproj" />
   </ItemGroup>
 
 </Project>

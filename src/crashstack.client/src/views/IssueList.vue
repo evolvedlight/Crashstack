@@ -8,7 +8,7 @@
             <input type="checkbox"
               class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
               :checked="indeterminate || selectedIssues.length === issues.length" :indeterminate="indeterminate"
-              @change="selectedIssues = $event.target.checked ? issues.map((p) => p.id) : []" />
+              @change="selectedIssues = ($event.target as HTMLInputElement)?.checked ? issues.map((p) => p.id) : []" />
           </th>
           <th scope="col" class="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900">Name</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white-900"></th>

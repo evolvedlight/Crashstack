@@ -144,7 +144,6 @@ import {
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
 import { Bars3Icon, ChevronRightIcon, ChevronUpDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
-import ProjectList from './components/ProjectList.vue';
 
 interface NavigationItem {
   name: string;
