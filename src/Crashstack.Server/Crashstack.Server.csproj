@@ -4,11 +4,20 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+	<EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
     <SpaRoot>..\crashstack.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<ContainerRepository>dotnet-worker-image</ContainerRepository>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IsPublishable>true</IsPublishable>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+  </PropertyGroup>
+	
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
@@ -17,10 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Crashstack.Contracts\Crashstack.Contracts.csproj" />
-    <ProjectReference Include="..\..\Crashstack.Data\Crashstack.Data.csproj" />
-    <ProjectReference Include="..\..\Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\..\SentryParser\SentryParser.csproj" />
+    <ProjectReference Include="..\Crashstack.Contracts\Crashstack.Contracts.csproj" />
+    <ProjectReference Include="..\Crashstack.Data\Crashstack.Data.csproj" />
+    <ProjectReference Include="..\Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\SentryParser\SentryParser.csproj" />
     <ProjectReference Include="..\crashstack.client\crashstack.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
