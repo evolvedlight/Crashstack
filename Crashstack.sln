@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrashstackApi", "src\CrashstackApi\CrashstackApi.csproj", "{4B5C693F-F8FC-4978-B815-4323B34F2A2B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SentryParser", "src\SentryParser\SentryParser.csproj", "{1F304A51-D8BF-43CF-9A15-A8C939B1F281}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SentryParserUnitTests", "tests\SentryParserUnitTests\SentryParserUnitTests.csproj", "{9E2EED2A-7EC0-4BBB-82EB-0EEB19BB8E16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.AppHost", "Crashstack.AppHost\Crashstack.AppHost.csproj", "{CADCC24A-D77B-441C-91C1-6D31AE537C04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.AppHost", "src\Crashstack.AppHost\Crashstack.AppHost.csproj", "{CADCC24A-D77B-441C-91C1-6D31AE537C04}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.ServiceDefaults", "Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj", "{FB6EB211-C2B3-4B9B-B02A-F9013BE135D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.ServiceDefaults", "src\Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj", "{FB6EB211-C2B3-4B9B-B02A-F9013BE135D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Data", "src\Crashstack.Data\Crashstack.Data.csproj", "{815770C8-0308-41AE-ABDC-1195E1881ACC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.MigrationService", "src\Crashstack.MigrationService\Crashstack.MigrationService.csproj", "{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Server", "src\Crashstack\Crashstack.Server\Crashstack.Server.csproj", "{76D981DC-A4D6-4A45-A045-F1660C44E1B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Server", "src\Crashstack\Crashstack.Server\Crashstack.Server.csproj", "{8D335309-BD9E-404A-A1D5-A347BEF2708C}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crashstack.client", "src\Crashstack\crashstack.client\crashstack.client.esproj", "{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.Contracts", "src\Crashstack.Contracts\Crashstack.Contracts.csproj", "{53FB3516-6A56-4438-8141-665A136FD642}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4B5C693F-F8FC-4978-B815-4323B34F2A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B5C693F-F8FC-4978-B815-4323B34F2A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B5C693F-F8FC-4978-B815-4323B34F2A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B5C693F-F8FC-4978-B815-4323B34F2A2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F304A51-D8BF-43CF-9A15-A8C939B1F281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F304A51-D8BF-43CF-9A15-A8C939B1F281}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F304A51-D8BF-43CF-9A15-A8C939B1F281}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,10 +51,20 @@ Global
 		{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFDB4826-65EC-4FEF-AE5E-0D042F54B1B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76D981DC-A4D6-4A45-A045-F1660C44E1B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76D981DC-A4D6-4A45-A045-F1660C44E1B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76D981DC-A4D6-4A45-A045-F1660C44E1B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76D981DC-A4D6-4A45-A045-F1660C44E1B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D335309-BD9E-404A-A1D5-A347BEF2708C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D335309-BD9E-404A-A1D5-A347BEF2708C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D335309-BD9E-404A-A1D5-A347BEF2708C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D335309-BD9E-404A-A1D5-A347BEF2708C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{53FB3516-6A56-4438-8141-665A136FD642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53FB3516-6A56-4438-8141-665A136FD642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53FB3516-6A56-4438-8141-665A136FD642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53FB3516-6A56-4438-8141-665A136FD642}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj" />
     <ProjectReference Include="..\Crashstack.Data\Crashstack.Data.csproj" />
+    <ProjectReference Include="..\Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

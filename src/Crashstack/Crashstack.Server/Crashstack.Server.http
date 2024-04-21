@@ -1,0 +1,6 @@
+@Crashstack.Server_HostAddress = http://localhost:5249
+
+GET {{Crashstack.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

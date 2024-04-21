@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Crashstack.Data.Entities
+﻿namespace Crashstack.Data.Entities
 {
     public class Issue
     {
@@ -16,6 +10,8 @@ namespace Crashstack.Data.Entities
 
         // Short term hack - find where the stacktrace matches
         public string IssueSearchField { get; set; }
+
+        public ICollection<CrashstackEvent> Events { get; set; } = [];
     }
 
     public enum IssueStatus
