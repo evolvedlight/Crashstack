@@ -1,5 +1,7 @@
 using Crashstack.Data;
 using Crashstack.Server.Hubs;
+using Microsoft.EntityFrameworkCore;
+using static Crashstack.Server.Provider;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -12,9 +14,37 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddRequestDecompression();
 
-builder.AddNpgsqlDbContext<CrashstackDbContext>("crashstack");
+var config = builder.Configuration;
+
+var provider = builder.Configuration.GetValue("provider", Sqlite.Name);
+
+builder.Services.AddDbContext<CrashstackDbContext>(options =>
+{
+    if (provider == Sqlite.Name)
+    {
+        options.UseSqlite(
+            config.GetConnectionString(Sqlite.Name)!,
+            x => x.MigrationsAssembly(Sqlite.Assembly)
+        );
+    }
+
+    if (provider == Postgres.Name)
+    {
+        options.UseNpgsql(
+            config.GetConnectionString(Postgres.Name)!,
+            x => x.MigrationsAssembly(Postgres.Assembly)
+        );
+    }
+});
 
 var app = builder.Build();
+
+if (provider == Sqlite.Name)
+{
+    var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<CrashstackDbContext>();
+    db.Database.Migrate();
+}
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

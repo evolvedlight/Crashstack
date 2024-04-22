@@ -9,18 +9,18 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Crashstack.Data.Migrations
+namespace Crashstack.Migrations.Postgres.Migrations
 {
     [DbContext(typeof(CrashstackDbContext))]
-    [Migration("20240401164043_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240422210840_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -119,12 +119,17 @@ namespace Crashstack.Data.Migrations
             modelBuilder.Entity("Crashstack.Data.Entities.CrashstackEvent", b =>
                 {
                     b.HasOne("Crashstack.Data.Entities.Issue", "Issue")
-                        .WithMany()
+                        .WithMany("Events")
                         .HasForeignKey("IssueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Issue");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Issue", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

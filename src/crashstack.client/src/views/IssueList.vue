@@ -10,15 +10,12 @@
               :checked="indeterminate || selectedIssues.length === issues.length" :indeterminate="indeterminate"
               @change="selectedIssues = ($event.target as HTMLInputElement)?.checked ? issues.map((p) => p.id) : []" />
           </th>
-          <th scope="col" class="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900">Name</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white-900"></th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">First Seen</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Last Seen</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-white/5">
-        <tr v-for="issue in issues" :key="issue.id"
-          :class="[selectedIssues.includes(issue.id) && 'bg-gray-800']">
+        <tr v-for="issue in issues" :key="issue.id" :class="[selectedIssues.includes(issue.id) && 'bg-gray-800']">
           <td class="relative px-7 sm:w-12 sm:px-6">
             <div v-if="selectedIssues.includes(issue.id)" class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600">
             </div>
@@ -35,10 +32,7 @@
             </div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{ issue.title }}
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{ issue.id }}
+            {{ issue.lastSeen }}
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             {{ issue.lastSeen }}
