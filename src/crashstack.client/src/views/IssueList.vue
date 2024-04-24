@@ -10,6 +10,7 @@
               :checked="indeterminate || selectedIssues.length === issues.length" :indeterminate="indeterminate"
               @change="selectedIssues = ($event.target as HTMLInputElement)?.checked ? issues.map((p) => p.id) : []" />
           </th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white"></th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">First Seen</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Last Seen</th>
         </tr>
@@ -32,10 +33,10 @@
             </div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{ issue.lastSeen }}
+            {{ new Date(issue.createdAt).toLocaleString() }}
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{ issue.lastSeen }}
+            {{ new Date(issue.lastSeen).toLocaleString() }}
           </td>
         </tr>
       </tbody>
@@ -50,30 +51,12 @@ import { ref, computed } from 'vue';
 
 const route = useRoute();
 
-import {
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from '@headlessui/vue'
-import { ChevronRightIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-
-const statuses: Record<string, string> = {
-  offline: 'text-gray-500 bg-gray-100/10',
-  online: 'text-green-400 bg-green-400/10',
-  error: 'text-rose-400 bg-rose-400/10',
-}
-
-const environments: Record<string, string> = {
-  Preview: 'text-gray-400 bg-gray-400/10 ring-gray-400/20',
-  Production: 'text-indigo-400 bg-indigo-400/10 ring-indigo-400/30',
-}
-
 interface Issue {
   id: string;
   title: string;
   href: string;
   level: string;
+  createdAt: Date;
   lastSeen: Date;
 }
 
@@ -91,6 +74,7 @@ interface IssueDto {
   id: string;
   title: string;
   href: string;
+  createdAt: Date;
   lastSeen: Date;
 }
 
@@ -100,10 +84,12 @@ connection.on("issueReceived", (issueReceived: IssueDto) => {
 
   if (existingIssueIndex !== -1) {
     // Replace existing issue
+    console.info("replacing issue, last seen" + issueReceived.lastSeen);
     issues.value.splice(existingIssueIndex, 1, {
       id: issueReceived.id,
       href: '/issue/' + issueReceived.id,
       title: issueReceived.title,
+      createdAt: issueReceived.createdAt,
       lastSeen: issueReceived.lastSeen,
       level: 'error'
     });
@@ -113,6 +99,7 @@ connection.on("issueReceived", (issueReceived: IssueDto) => {
       id: issueReceived.id,
       href: '/issue/' + issueReceived.id,
       title: issueReceived.title,
+      createdAt: issueReceived.createdAt,
       lastSeen: issueReceived.lastSeen,
       level: 'error'
     });
