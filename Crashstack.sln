@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Server", "src\Cr
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crashstack.client", "src\crashstack.client\crashstack.client.esproj", "{BA6BB36D-E93F-4891-B4B4-6A683519BDDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.Contracts", "src\Crashstack.Contracts\Crashstack.Contracts.csproj", "{53FB3516-6A56-4438-8141-665A136FD642}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crashstack.Contracts", "src\Crashstack.Contracts\Crashstack.Contracts.csproj", "{53FB3516-6A56-4438-8141-665A136FD642}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.Migrations.Postgres", "src\Crashstack.Migrations.Postgres\Crashstack.Migrations.Postgres.csproj", "{AB0A860A-CD02-46FC-AC87-409820C3DCBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crashstack.Migrations.Sqlite", "src\Crashstack.Migrations.Sqlite\Crashstack.Migrations.Sqlite.csproj", "{58067FB4-1E27-4AC7-BFC2-14C7EFC95374}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +69,14 @@ Global
 		{53FB3516-6A56-4438-8141-665A136FD642}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53FB3516-6A56-4438-8141-665A136FD642}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53FB3516-6A56-4438-8141-665A136FD642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0A860A-CD02-46FC-AC87-409820C3DCBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0A860A-CD02-46FC-AC87-409820C3DCBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0A860A-CD02-46FC-AC87-409820C3DCBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0A860A-CD02-46FC-AC87-409820C3DCBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58067FB4-1E27-4AC7-BFC2-14C7EFC95374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58067FB4-1E27-4AC7-BFC2-14C7EFC95374}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58067FB4-1E27-4AC7-BFC2-14C7EFC95374}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58067FB4-1E27-4AC7-BFC2-14C7EFC95374}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

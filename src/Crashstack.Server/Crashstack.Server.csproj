@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -22,12 +22,18 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Crashstack.Contracts\Crashstack.Contracts.csproj" />
     <ProjectReference Include="..\Crashstack.Data\Crashstack.Data.csproj" />
+    <ProjectReference Include="..\Crashstack.Migrations.Postgres\Crashstack.Migrations.Postgres.csproj" />
+    <ProjectReference Include="..\Crashstack.Migrations.Sqlite\Crashstack.Migrations.Sqlite.csproj" />
     <ProjectReference Include="..\Crashstack.ServiceDefaults\Crashstack.ServiceDefaults.csproj" />
     <ProjectReference Include="..\SentryParser\SentryParser.csproj" />
     <ProjectReference Include="..\crashstack.client\crashstack.client.esproj">
