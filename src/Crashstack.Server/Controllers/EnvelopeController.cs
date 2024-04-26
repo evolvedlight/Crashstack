@@ -44,7 +44,7 @@ public class EnvelopeController : ControllerBase
 			{
 				if (envelopeItem?.Event?.Exception is not null)
 				{
-					await SaveError(envelopeItem.Event);
+					await SaveError(projectId, envelopeItem.Event);
 				}
 			}
 
@@ -54,13 +54,15 @@ public class EnvelopeController : ControllerBase
 		return Ok();
 	}
 
-	private async Task SaveError(SentryEvent sentryEvent)
+	private async Task SaveError(string projectId, SentryEvent sentryEvent)
 	{
 		if (sentryEvent?.Exception is null)
 		{
 			_logger.LogWarning("Not an exception");
 			return;
 		}
+
+		var project = await _db.Projects.SingleAsync(p => p.PublicId == projectId);
 
 		foreach (var exceptionMap in sentryEvent.Exception)
 		{
@@ -73,7 +75,7 @@ public class EnvelopeController : ControllerBase
 				}
 				// Naive way - go by just one top stack frame
 				var candidateIssues = await _db.Issues
-					.Where(i => i.IssueSearchField == issueSearchField)
+					.Where(i => i.IssueSearchField == issueSearchField && i.ProjectId == project.Id)
 					.ToListAsync();
 
 				Issue issue;
@@ -86,6 +88,7 @@ public class EnvelopeController : ControllerBase
 					issue = new Issue
 					{
 						IssueSearchField = issueSearchField,
+						ProjectId = project.Id,
 						Title = exception.Value,
 						CreatedAt = DateTime.UtcNow,
 						Level = sentryEvent.Level,

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Crashstack.Migrations.Postgres.Migrations
 {
     [DbContext(typeof(CrashstackDbContext))]
-    [Migration("20240422210840_Initial")]
+    [Migration("20240426214503_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -81,6 +81,9 @@ namespace Crashstack.Migrations.Postgres.Migrations
                     b.Property<string>("Level")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -90,7 +93,28 @@ namespace Crashstack.Migrations.Postgres.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProjectId");
+
                     b.ToTable("Issues");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("Crashstack.Data.Entities.Trace", b =>
@@ -129,7 +153,23 @@ namespace Crashstack.Migrations.Postgres.Migrations
 
             modelBuilder.Entity("Crashstack.Data.Entities.Issue", b =>
                 {
+                    b.HasOne("Crashstack.Data.Entities.Project", "Project")
+                        .WithMany("Issues")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Issue", b =>
+                {
                     b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Project", b =>
+                {
+                    b.Navigation("Issues");
                 });
 #pragma warning restore 612, 618
         }

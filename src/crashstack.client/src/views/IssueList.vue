@@ -15,7 +15,7 @@
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Last Seen</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-white/5">
+      <tbody v-if="issues.length > 0" class="divide-y divide-white/5">
         <tr v-for="issue in issues" :key="issue.id" :class="[selectedIssues.includes(issue.id) && 'bg-gray-800']">
           <td class="relative px-7 sm:w-12 sm:px-6">
             <div v-if="selectedIssues.includes(issue.id)" class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600">
@@ -41,13 +41,25 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="issues.length === 0">
+      <div class="rounded-md bg-green-900 p-4 m-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <CheckCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-green-50">Hurrah! No issues!</h3>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
-
+import { CheckCircleIcon } from '@heroicons/vue/20/solid'
 
 const route = useRoute();
 

@@ -19,7 +19,14 @@ namespace Crashstack.Server.Hubs
         public override async Task OnConnectedAsync()
         {
             _logger.LogInformation("Client connected. Sending all projects");
-            await Clients.Caller.SendAsync("projectReceived", new AddProjectMessage(Guid.NewGuid().ToString(), "Default"));
+
+            var projects = await _db.Projects.ToListAsync();
+
+            foreach (var project in projects)
+            {
+                await Clients.Caller.SendAsync("projectReceived", new AddProjectMessage(project.Id.ToString(), project.Name));
+            }
+            
             await base.OnConnectedAsync();
         }
 

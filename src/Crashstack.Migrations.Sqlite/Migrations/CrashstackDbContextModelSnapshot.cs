@@ -73,6 +73,9 @@ namespace Crashstack.Migrations.Sqlite.Migrations
                     b.Property<string>("Level")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
@@ -82,7 +85,28 @@ namespace Crashstack.Migrations.Sqlite.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProjectId");
+
                     b.ToTable("Issues");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("Crashstack.Data.Entities.Trace", b =>
@@ -121,7 +145,23 @@ namespace Crashstack.Migrations.Sqlite.Migrations
 
             modelBuilder.Entity("Crashstack.Data.Entities.Issue", b =>
                 {
+                    b.HasOne("Crashstack.Data.Entities.Project", "Project")
+                        .WithMany("Issues")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Issue", b =>
+                {
                     b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("Crashstack.Data.Entities.Project", b =>
+                {
+                    b.Navigation("Issues");
                 });
 #pragma warning restore 612, 618
         }
