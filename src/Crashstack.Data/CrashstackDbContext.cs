@@ -7,4 +7,5 @@ public class CrashstackDbContext(DbContextOptions<CrashstackDbContext> options) 
     public DbSet<CrashstackEvent> CrashstackEvents { get; set; }
     public DbSet<Trace> Traces { get; set; }
     public DbSet<Issue> Issues { get; set; }
+    public DbSet<Project> Projects { get; set; }
 }

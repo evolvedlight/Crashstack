@@ -12,20 +12,23 @@ namespace Crashstack.Migrations.Sqlite.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Issues",
+                name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Level = table.Column<string>(type: "TEXT", nullable: true),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    IssueSearchField = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    PublicId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Issues", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.Id);
                 });
+
+            var projectGuid = Guid.NewGuid();
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: ["Id", "Name", "PublicId"],
+                values: [projectGuid, "Default Project", "1"]);
 
             migrationBuilder.CreateTable(
                 name: "Traces",
@@ -40,6 +43,29 @@ namespace Crashstack.Migrations.Sqlite.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Traces", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Issues",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProjectId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Level = table.Column<string>(type: "TEXT", nullable: true),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    IssueSearchField = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Issues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Issues_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,6 +98,11 @@ namespace Crashstack.Migrations.Sqlite.Migrations
                 name: "IX_CrashstackEvents_IssueId",
                 table: "CrashstackEvents",
                 column: "IssueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Issues_ProjectId",
+                table: "Issues",
+                column: "ProjectId");
         }
 
         /// <inheritdoc />
@@ -85,6 +116,9 @@ namespace Crashstack.Migrations.Sqlite.Migrations
 
             migrationBuilder.DropTable(
                 name: "Issues");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
         }
     }
 }
