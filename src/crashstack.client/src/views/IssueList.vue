@@ -27,9 +27,7 @@
           <td
             :class="['whitespace-nowrap py-4 pr-3 text-sm font-medium', selectedIssues.includes(issue.id) ? 'text-indigo-600' : 'text-gray-900']">
             <div class="flex flex-col gap-x-4">
-              <div class="truncate text-sm font-medium text-white">{{ issue.title }}</div>
-              <div class="truncate text-sm font-small text-white">{{ issue.href }}</div>
-              <div class="truncate text-sm font-small text-white">{{ issue.id }}</div>
+              <div class="truncate text-sm font-medium text-white"><RouterLink :to="'/issue/' + issue.id">{{ issue.title }}</RouterLink></div>
             </div>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
